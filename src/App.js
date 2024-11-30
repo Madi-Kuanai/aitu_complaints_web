@@ -26,7 +26,9 @@ function App() {
                     AITU.
                     Моя цель — помочь вам решить проблемы и ответить на вопросы. </h1>
                 <div className="flex justify-between items-center mb-3.5 gap-4">
-                    <button className="p-4 pl-6 pr-6 bg-[#eee] text-xl rounded-xl">Начать</button>
+                    <button className="p-4 pl-6 pr-6 bg-[#eee] text-xl rounded-xl"
+                            onClick={() => console.log("f")}>Начать
+                    </button>
                 </div>
             </Frame>
         </div>
