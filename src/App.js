@@ -18,7 +18,7 @@ function App() {
         initTelegram()
     }, [initTelegram]);
     return (
-        <div className="App flex flex-col items-center justify-center">
+        <div className="App flex relative flex-col items-center justify-center">
             <Frame>
                 <Header/>
                 <h1 className="text-white font-bold font-sans text-4xl"> AITU Complaints</h1>
