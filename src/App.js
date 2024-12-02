@@ -2,37 +2,23 @@
 import "./index.css"
 import {useEffect} from "react";
 import {AppViewModel} from "./viewModel/AppViewModel";
-import {PropsWithChildren} from "react";
-import {Header} from "./components/Header";
+import HomeScreen from "./screens/HomeScreen";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {Choices} from "./components/Accordion";
 
-const Frame: React.FC<PropsWithChildren> = ({children}) => {
-    return <div className="flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-        {children}
-    </div>;
-}
 
 function App() {
     const {initTelegram} = AppViewModel()
-
     useEffect(() => {
         initTelegram()
     }, [initTelegram]);
-    return (
-        <div className="App flex size-full flex-col items-center justify-center">
-            <Frame>
-                <Header/>
-                <h1 className="text-white font-bold font-sans text-4xl"> AITU Complaints</h1>
-                <h1 className="font-medium text-center text-[#555] m-10 font-montserrat "> Я ваш комплаенс-бот
-                    AITU.
-                    Моя цель — помочь вам решить проблемы и ответить на вопросы. </h1>
-                <div className="flex justify-between items-center mb-3.5 gap-4">
-                    <button className="p-4 pl-6 pr-6 bg-[#eee] text-xl rounded-xl"
-                            onClick={() => console.log("f")}>Начать
-                    </button>
-                </div>
-            </Frame>
-        </div>
-    );
+
+    return (<Router>
+        <Routes>
+            <Route path="/" element={<HomeScreen/>}/>
+            <Route path="/complaints" element={<Choices/>}/>
+        </Routes>
+    </Router>);
 }
 
 export default App;
