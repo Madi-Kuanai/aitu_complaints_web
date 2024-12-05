@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {AppViewModel} from "./viewModel/AppViewModel";
 import HomeScreen from "./screens/HomeScreen";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import {Choices} from "./components/Accordion";
+import {AccordionScreen} from "./screens/AccordionScreen";
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     return (<Router>
         <Routes>
             <Route path="/" element={<HomeScreen/>}/>
-            <Route path="/complaints" element={<Choices/>}/>
+            <Route path="/complaints" element={<AccordionScreen/>}/>
         </Routes>
     </Router>);
 }
