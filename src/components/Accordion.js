@@ -50,7 +50,7 @@ function SubCategory({category}) {
 
 export const Choices = () => {
     return (
-        <Accordion className={`w-3/4 justify-content-center absolute align-items-center overflow-y-auto mt-[30%]`}
+        <Accordion className={`w-[80%] justify-content-center absolute align-items-center overflow-y-auto mt-[30%]`}
                    defaultActiveKey="0">
             {(categories.map((category, index) => <Card key={index} className="mb-0.5"
                                                         style={{background: "#222", color: "white"}}>
