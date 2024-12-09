@@ -1,21 +1,15 @@
-import React, {PropsWithChildren} from 'react';
 import {Header} from "../components/Header";
 import {useNavigate} from "react-router-dom";
 
 function HomeScreen() {
     const navigate = useNavigate();
-
     const goToComplaint = () => {
         navigate('/complaints');
     }
-    const Frame: React.FC<PropsWithChildren> = ({children}) => {
-        return <div className="flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-            {children}
-        </div>;
-    }
+
     return (
         <div className="App flex flex-col items-center justify-center">
-            <Frame>
+            <div className="flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
                 <Header/>
                 <h1 className="text-white font-bold font-sans text-4xl"> AITU Complaints</h1>
                 <p className="text-center size-full pr-5 pl-5 text-[#555] m-10 font-montserrat text-sm-center"> Я ваш
@@ -27,7 +21,7 @@ function HomeScreen() {
                         onClick={goToComplaint}>Начать
                     </button>
                 </div>
-            </Frame>
+            </div>
         </div>
     );
 }

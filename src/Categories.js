@@ -86,7 +86,7 @@ export const categories: Category[] = [
     {
         id: 8,
         name: "Личные проблемы",
-        "subcategories": [
+        subcategories: [
             {
                 id: 8.1,
                 name: "Проблемы с другими студентами",
@@ -130,3 +130,17 @@ export const categories: Category[] = [
         ]
     }
 ]
+export const findCategoryById = (id: number | string): Category | undefined => {
+    for (const category of categories) {
+        if (category.id === id) {
+            return category;
+        }
+
+        if (category.subcategories) {
+            const subcategory = category.subcategories.find(subcat => subcat.id === id);
+            if (subcategory) {
+                return subcategory;
+            }
+        }
+    }
+};

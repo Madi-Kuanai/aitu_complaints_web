@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import {Accordion, AccordionContext, Card, useAccordionButton} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {categories} from "../Categories";
+import {useNavigate} from "react-router-dom";
 
 function AccordionItem({children, eventKey, callback}) {
     const {activeEventKey} = useContext(AccordionContext);
@@ -31,6 +32,8 @@ function SubAccordionItem({children, eventKey, callback}) {
 }
 
 function SubCategory({category}) {
+    const navigate = useNavigate();
+
     return <Accordion defaultActiveKey={category.subcategories[0]?.id} className="w-[95%] relative float-end right-0">
         {category.subcategories.map((sub) => (
             <Card key={sub.id} className="h-1/4" style={{background: "#222", color: "white"}}>
@@ -42,6 +45,9 @@ function SubCategory({category}) {
                 <Accordion.Collapse eventKey={sub.id}>
                     <Card.Body>
                         <p className="text-sm pl-5 border-l-2 border-solid border-l-white">{sub.description}</p>
+                        <p className="float-end text-white mb-3.5 underline" onClick={() => {
+                            navigate("/form", {state: {isSub: true, id: sub.id}});
+                        }}>Далее&#8594;</p>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>))}
@@ -49,6 +55,7 @@ function SubCategory({category}) {
 }
 
 export const Choices = () => {
+    const navigate = useNavigate();
     return (
         <Accordion className={`w-[80%] justify-content-center absolute align-items-center overflow-y-auto mt-[30%]`}
                    defaultActiveKey="0">
@@ -60,10 +67,17 @@ export const Choices = () => {
                 <Accordion.Collapse eventKey={index}>
                     <Card.Body>
                         {!category.subcategories ?
-                            <p className="text-sm pl-3 border-l-2 border-solid border-l-white">{category.description}</p> :
+                            <>
+                                <p className="text-sm pl-3 border-l-2 border-solid border-l-white">{category.description}</p>
+                                <p className="float-end text-white mb-3.5 underline" onClick={() => {
+                                    navigate("/form", {
+                                        state: {
+                                            isSub: category.subcategories != null,
+                                            id: category.id
+                                        }
+                                    });
+                                }}>Далее&#8594;</p></> :
                             <SubCategory category={category}/>}
-                        <p className="float-end text-white mb-3.5 underline" onClick={() => {
-                        }}>Далее&#8594;</p>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>))}
