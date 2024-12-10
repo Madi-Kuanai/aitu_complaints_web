@@ -17,7 +17,7 @@ function HomeScreen() {
                     Моя цель — помочь вам решить проблемы и ответить на вопросы. </p>
                 <div className="flex justify-between items-center mb-3.5 gap-4">
                     <button
-                        className="p-4 pl-6 pr-6 text-white bg-transparent border-2 text-xl rounded-xl hover:bg-white hover:text-black font-montserrat"
+                        className="p-3 pl-4 pr-4 text-white bg-transparent border-2 text-xl rounded-xl hover:bg-white hover:text-black font-montserrat"
                         onClick={goToComplaint}>Начать
                     </button>
                 </div>
