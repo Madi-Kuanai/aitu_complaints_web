@@ -2,6 +2,9 @@ import {useCallback, useState} from "react";
 
 export function AppViewModel() {
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+    const [userInput, setUserInput] = useState('');
+    const [placeholder] = useState('Расскажите подробно...');
+
     const handleResize = () => setViewportHeight(window.innerHeight);
 
     const initTelegram = useCallback(() => {
@@ -11,6 +14,6 @@ export function AppViewModel() {
     }, []);
 
     return {
-        viewportHeight, initTelegram
+        viewportHeight, initTelegram, userInput, setUserInput, placeholder
     }
 }

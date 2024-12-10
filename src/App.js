@@ -13,7 +13,6 @@ function App() {
     useEffect(() => {
         initTelegram()
     }, [initTelegram]);
-
     return (<Router>
         <Routes>
             <Route path="/" element={<HomeScreen/>}/>

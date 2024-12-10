@@ -1,13 +1,27 @@
 import {useLocation} from "react-router-dom";
 import {findCategoryById} from "../Categories";
+import {AppViewModel} from "../viewModel/AppViewModel";
+import {HintTooltip} from "../components/Tooltip";
 
 export function FormScreen() {
+    const {placeholder, userInput, setUserInput} = AppViewModel();
     const location = useLocation();
     const {state} = location;
     console.log(state)
+    const category = findCategoryById(state.isSub ? state?.id : state?.id)
     return <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-
-        <h2 className="text-white mt-[10%]">{findCategoryById(state.isSub ? state?.id : state?.id).name}</h2>
-        
+        <div className="w-full items-center justify-center float-end flex space-x-2">
+            <h2 className="text-white mt-[10%]">{category.name}</h2>
+            <HintTooltip hint={category.description}/>
+        </div>
+        <textarea
+            className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded"
+            placeholder={placeholder}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button className={"mt-3 bg-[#444] text-white border-0 rounded mb-3.5"}
+                style={{padding: "10px 20px"}}>Отправить
+        </button>
     </div>
 }
