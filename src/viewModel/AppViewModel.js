@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 
 export function AppViewModel() {
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
@@ -13,7 +13,7 @@ export function AppViewModel() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    return {
+    return useMemo(() => ({
         viewportHeight, initTelegram, userInput, setUserInput, placeholder
-    }
+    }), [viewportHeight, initTelegram, userInput, placeholder]);
 }
