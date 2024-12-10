@@ -16,7 +16,7 @@ export function FormScreen() {
             <HintTooltip hint={category.description}/>
         </div>
         <textarea
-            className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white"
+            className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white focus:border-white"
             placeholder={placeholder}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
