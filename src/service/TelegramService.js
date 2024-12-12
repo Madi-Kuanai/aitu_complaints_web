@@ -1,5 +1,5 @@
 export async function sendComplaints(webAppQueryId, text, dataUnsafe) {
-    const response = await fetch(`https://aitu-complaints.netlify.app/complaints`, {
+    const response = await fetch(`https://aitucomplaintsbot-production.up.railway.app/`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
