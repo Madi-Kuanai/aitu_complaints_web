@@ -1,19 +1,73 @@
 import {useCallback, useMemo, useState} from "react";
+import {sendComplaints} from "../service/TelegramService";
+
+let instance = null;
 
 export function AppViewModel() {
     const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
     const [userInput, setUserInput] = useState('');
     const [placeholder] = useState('Расскажите подробно...');
+    const [loading, setLoading] = useState(false);
+    const [isEnd, setIsEnd] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    const handleResize = () => setViewportHeight(window.innerHeight);
+    const tg = window.Telegram ? window.Telegram.WebApp : null;
+
+    const handleResize = useCallback(() => setViewportHeight(window.innerHeight), []);
 
     const initTelegram = useCallback(() => {
         window.addEventListener('resize', handleResize);
         if (!window.Telegram) alert('Telegram WebApp API не доступен');
         return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]);
+
+    const onSendComplaints = useCallback(async () => {
+        if (userInput.trim() === "") return;
+        setLoading(true);
+        setIsEnd(false);
+        setIsError(false);
+
+        try {
+            const webAppQueryId = tg.initDataUnsafe.query_id;
+            const response = await sendComplaints(webAppQueryId, userInput);
+            setLoading(false);
+            setIsEnd(true);
+            if (response.ok) tg.close();
+        } catch (error) {
+            setLoading(false);
+            setIsEnd(true);
+            setIsError(true);
+            console.error("Error sending WebAppQuery result:", error);
+        }
+    }, [userInput, tg]);
+
+    const resetLoading = useCallback(() => {
+        setLoading(false);
+        setIsEnd(false);
+        setIsError(false);
     }, []);
 
-    return useMemo(() => ({
-        viewportHeight, initTelegram, userInput, setUserInput, placeholder
-    }), [viewportHeight, initTelegram, userInput, placeholder]);
+    instance = useMemo(() => ({
+        viewportHeight,
+        initTelegram,
+        userInput,
+        setUserInput,
+        placeholder,
+        resetLoading,
+        onSendComplaints,
+        loading,
+        isError,
+        isEnd
+    }), [
+        viewportHeight,
+        initTelegram,
+        userInput,
+        placeholder,
+        resetLoading,
+        onSendComplaints,
+        loading,
+        isError,
+        isEnd
+    ]);
+    return instance;
 }

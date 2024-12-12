@@ -5,7 +5,7 @@ import {HintTooltip} from "../components/Tooltip";
 import {useMemo} from "react";
 
 export function FormScreen() {
-    const {placeholder, userInput, setUserInput} = AppViewModel();
+    const {placeholder, userInput, setUserInput, onSendComplaints} = AppViewModel();
     const location = useLocation();
     const {state} = location;
     const category = useMemo(() => findCategoryById(state.isSub ? state?.id : state?.id), [state]);
@@ -21,7 +21,9 @@ export function FormScreen() {
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
         />
-        <button className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"}
+        <button className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"} onClick={() => {
+            onSendComplaints()
+        }}
                 style={{padding: "10px 20px"}}>Отправить
         </button>
     </div>
