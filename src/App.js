@@ -15,8 +15,7 @@ function App() {
     }, [initTelegram]);
     return (<Router>
         <Routes>
-            <Route path="/" element={<HomeScreen/>}/>
-            <Route path="/complaints" element={<AccordionScreen/>}/>
+            <Route path="/" element={<AccordionScreen/>}/>
             <Route path="/form" element={<FormScreen/>}/>
         </Routes>
     </Router>);
