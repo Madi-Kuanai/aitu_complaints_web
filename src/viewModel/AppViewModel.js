@@ -37,7 +37,6 @@ export function AppViewModel() {
             setLoading(false);
             setIsEnd(true);
             setIsError(true);
-            console.error("Error sending WebAppQuery result:", error);
         }
     }, [userInput, tg]);
 

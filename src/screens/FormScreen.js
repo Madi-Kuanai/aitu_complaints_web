@@ -2,29 +2,47 @@ import {useLocation} from "react-router-dom";
 import {findCategoryById} from "../Categories";
 import {AppViewModel} from "../viewModel/AppViewModel";
 import {HintTooltip} from "../components/Tooltip";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 
 export function FormScreen() {
     const {placeholder, userInput, setUserInput, onSendComplaints} = AppViewModel();
     const location = useLocation();
     const {state} = location;
     const category = useMemo(() => findCategoryById(state.isSub ? state?.id : state?.id), [state]);
-    console.log(category)
-    return <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-        <div className="w-full items-center justify-center float-end flex space-x-2">
-            <h3 className="text-white mt-[10%]">{category.name}</h3>
-            <HintTooltip hint={category.description}/>
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSendComplaints = async () => {
+        setIsLoading(true);
+        try {
+            await onSendComplaints();
+        } catch (error) {
+            console.error("Ошибка отправки:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
+            <div className="w-full items-center justify-center float-end flex space-x-2">
+                <h3 className="text-white mt-[10%]">{category.name}</h3>
+                <HintTooltip hint={category.description}/>
+            </div>
+            <textarea
+                className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white focus:border-white"
+                placeholder={placeholder}
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+            />
+            <button
+                className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"}
+                onClick={handleSendComplaints}
+                disabled={isLoading} // Блокировка кнопки во время загрузки
+                style={{padding: "10px 20px", cursor: isLoading ? "not-allowed" : "pointer"}}
+            >
+                {isLoading ? "Загрузка..." : "Отправить"} {/* Меняем текст кнопки */}
+            </button>
         </div>
-        <textarea
-            className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white focus:border-white"
-            placeholder={placeholder}
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-        />
-        <button className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"} onClick={() => {
-            onSendComplaints()
-        }}
-                style={{padding: "10px 20px"}}>Отправить
-        </button>
-    </div>
+    );
 }
