@@ -25,6 +25,7 @@ export function FormScreen() {
 
     return (
         <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
+
             <div className="w-full items-center justify-center float-end flex space-x-2">
                 <h3 className="text-white mt-[10%]">{category.name}</h3>
                 <HintTooltip hint={category.description}/>
@@ -41,7 +42,7 @@ export function FormScreen() {
                 disabled={isLoading} // Блокировка кнопки во время загрузки
                 style={{padding: "10px 20px", cursor: isLoading ? "not-allowed" : "pointer"}}
             >
-                {isLoading ? "Загрузка..." : "Отправить"} {/* Меняем текст кнопки */}
+                {isLoading ? "Загрузка..." : "Отправить"}
             </button>
         </div>
     );
