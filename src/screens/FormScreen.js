@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {findCategoryById} from "../Categories";
 import {AppViewModel} from "../viewModel/AppViewModel";
 import {HintTooltip} from "../components/Tooltip";
@@ -9,8 +9,10 @@ export function FormScreen() {
     const location = useLocation();
     const {state} = location;
     const category = useMemo(() => findCategoryById(state.isSub ? state?.id : state?.id), [state]);
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isSend, setIsSend] = useState(false);
 
     const handleSendComplaints = async () => {
         setIsLoading(true);
@@ -20,14 +22,20 @@ export function FormScreen() {
             console.error("Ошибка отправки:", error);
         } finally {
             setIsLoading(false);
+            setIsSend(true);
+            setTimeout(() => {
+                navigate("/")
+            }, 1000);
         }
     };
 
     return (
         <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-
+            <h6 className="text-white w-full ml-[15%] mt-[8%]" onClick={() => {
+                navigate("/")
+            }}>←Назад</h6>
             <div className="w-full items-center justify-center float-end flex space-x-2">
-                <h3 className="text-white mt-[10%]">{category.name}</h3>
+                <h3 className="text-white mt-[8%]">{category.name}</h3>
                 <HintTooltip hint={category.description}/>
             </div>
             <textarea
@@ -39,10 +47,10 @@ export function FormScreen() {
             <button
                 className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"}
                 onClick={handleSendComplaints}
-                disabled={isLoading} // Блокировка кнопки во время загрузки
+                disabled={isLoading}
                 style={{padding: "10px 20px", cursor: isLoading ? "not-allowed" : "pointer"}}
             >
-                {isLoading ? "Загрузка..." : "Отправить"}
+                {isLoading ? "Загрузка..." : isSend ? "Отправлено" : "Отправить"}
             </button>
         </div>
     );
