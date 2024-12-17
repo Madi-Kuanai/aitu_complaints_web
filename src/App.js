@@ -2,7 +2,6 @@
 import "./index.css"
 import {useEffect} from "react";
 import {AppViewModel} from "./viewModel/AppViewModel";
-import HomeScreen from "./screens/HomeScreen";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import {AccordionScreen} from "./screens/AccordionScreen";
 import {FormScreen} from "./screens/FormScreen";
