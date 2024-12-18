@@ -35,7 +35,7 @@ export function FormScreen() {
                 navigate("/")
             }}>←Назад</h6>
             <div className="w-full items-center justify-center float-end flex space-x-2">
-                <h3 className="text-white mt-[8%]">{category.name}</h3>
+                <h6 className="text-white mt-[8%]">{category.name}</h6>
                 <HintTooltip hint={category.description}/>
             </div>
             <textarea
