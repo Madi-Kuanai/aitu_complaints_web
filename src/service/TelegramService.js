@@ -12,5 +12,6 @@ export async function sendComplaints(webAppQueryId, text, type) {
             }
         }),
     });
+    console.log(response.json());
     return response.json();
 }
