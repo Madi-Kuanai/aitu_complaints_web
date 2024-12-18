@@ -3,6 +3,7 @@ import {findCategoryById} from "../Categories";
 import {AppViewModel} from "../viewModel/AppViewModel";
 import {HintTooltip} from "../components/Tooltip";
 import {useMemo, useState} from "react";
+import Swal from "sweetalert2";
 
 export function FormScreen() {
     const {placeholder, userInput, setUserInput, onSendComplaints} = AppViewModel();
@@ -18,26 +19,27 @@ export function FormScreen() {
         setIsLoading(true);
         try {
             await onSendComplaints(category.name);
+            await Swal.fire({
+                icon: "success", title: "Отправлено", text: category.actions
+            });
         } catch (error) {
+            await Swal.fire({
+                icon: "error", title: "Oops...", text: "Something went wrong!", footer: '<p>error</p>'
+            });
             console.error("Ошибка отправки:", error);
         } finally {
             setIsLoading(false);
             setIsSend(true);
-            setTimeout(() => {
-                navigate("/")
-            }, 1000);
         }
     };
 
-    return (
-        <div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
+    return (<div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
             <h6 className="text-white w-full ml-[15%] mt-[8%]" onClick={() => {
                 navigate("/")
             }}>←Назад</h6>
             <div className="w-full items-center justify-center float-end flex space-x-2">
                 {state.isSub ? <h6 className="text-white mt-[8%]">{category.name}</h6> :
-                    <h4 className="text-white mt-[8%]">{category.name}</h4>
-                }
+                    <h4 className="text-white mt-[8%]">{category.name}</h4>}
                 <HintTooltip hint={category.description}/>
             </div>
             <textarea
@@ -54,6 +56,5 @@ export function FormScreen() {
             >
                 {isLoading ? "Загрузка..." : isSend ? "Отправлено" : "Отправить"}
             </button>
-        </div>
-    );
+        </div>);
 }
