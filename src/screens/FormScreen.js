@@ -20,13 +20,25 @@ export function FormScreen() {
         try {
             await onSendComplaints(category.name);
             await Swal.fire({
-                icon: "success", title: "Отправлено", text: category.actions
+                icon: "success",
+                title: "Отправлено",
+                text: category.actions,
+                background: "#222",
+                confirmButtonColor: "#aaa",
+                color: "#fff"
+            }).then((result) => {
+                navigate("/")
             });
         } catch (error) {
             await Swal.fire({
-                icon: "error", title: "Oops...", text: "Something went wrong!", footer: '<p>error</p>'
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                background: "#222",
+                confirmButtonColor: "#aaa",
+                color: "#fff"
             });
-            console.error("Ошибка отправки:", error);
+            console.error("Ошибка отправки: ", error);
         } finally {
             setIsLoading(false);
             setIsSend(true);
@@ -34,27 +46,27 @@ export function FormScreen() {
     };
 
     return (<div className="form flex flex-col items-center justify-center w-full h-full bg-[#1c1c1c]">
-            <h6 className="text-white w-full ml-[15%] mt-[8%]" onClick={() => {
-                navigate("/")
-            }}>←Назад</h6>
-            <div className="w-full items-center justify-center float-end flex space-x-2">
-                {state.isSub ? <h6 className="text-white mt-[8%]">{category.name}</h6> :
-                    <h4 className="text-white mt-[8%]">{category.name}</h4>}
-                <HintTooltip hint={category.description}/>
-            </div>
-            <textarea
-                className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white focus:border-white"
-                placeholder={placeholder}
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-            />
-            <button
-                className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"}
-                onClick={handleSendComplaints}
-                disabled={isLoading}
-                style={{padding: "10px 20px", cursor: isLoading ? "not-allowed" : "pointer"}}
-            >
-                {isLoading ? "Загрузка..." : isSend ? "Отправлено" : "Отправить"}
-            </button>
-        </div>);
+        <h6 className="text-white w-full ml-[15%] mt-[8%]" onClick={() => {
+            navigate("/")
+        }}>←Назад</h6>
+        <div className="w-full items-center justify-center float-end flex space-x-2">
+            {state.isSub ? <h6 className="text-white mt-[8%]">{category.name}</h6> :
+                <h4 className="text-white mt-[8%]">{category.name}</h4>}
+            <HintTooltip hint={category.description}/>
+        </div>
+        <textarea
+            className="text-box h-1/2 border-2 border-[#444] bg-[#444] w-4/5 mt-16 p-3.5 rounded resize-none text-white focus:border-white"
+            placeholder={placeholder}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button
+            className={"mt-6 bg-[#444] text-white border-0 rounded mb-3.5"}
+            onClick={handleSendComplaints}
+            disabled={isLoading}
+            style={{padding: "10px 20px", cursor: isLoading ? "not-allowed" : "pointer"}}
+        >
+            {isLoading ? "Загрузка..." : isSend ? "Отправлено" : "Отправить"}
+        </button>
+    </div>);
 }
