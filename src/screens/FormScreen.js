@@ -36,7 +36,7 @@ export function FormScreen() {
             }}>←Назад</h6>
             <div className="w-full items-center justify-center float-end flex space-x-2">
                 {state.isSub ? <h6 className="text-white mt-[8%]">{category.name}</h6> :
-                    <h3 className="text-white mt-[8%]">{category.name}</h3>
+                    <h4 className="text-white mt-[8%]">{category.name}</h4>
                 }
                 <HintTooltip hint={category.description}/>
             </div>
