@@ -17,7 +17,7 @@ export function FormScreen() {
     const handleSendComplaints = async () => {
         setIsLoading(true);
         try {
-            await onSendComplaints();
+            await onSendComplaints(category);
         } catch (error) {
             console.error("Ошибка отправки:", error);
         } finally {

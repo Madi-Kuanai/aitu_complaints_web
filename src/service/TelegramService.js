@@ -1,4 +1,4 @@
-export async function sendComplaints(webAppQueryId, text, dataUnsafe) {
+export async function sendComplaints(webAppQueryId, text, type) {
     const response = await fetch(`https://aitucomplaintsbot-production.up.railway.app/complaints`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -7,7 +7,7 @@ export async function sendComplaints(webAppQueryId, text, dataUnsafe) {
             result: {
                 type: "article",
                 id: webAppQueryId,
-                title: dataUnsafe,
+                title: type,
                 input_message_content: {message_text: text}
             }
         }),

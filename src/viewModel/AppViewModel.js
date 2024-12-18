@@ -21,7 +21,7 @@ export function AppViewModel() {
         return () => window.removeEventListener('resize', handleResize);
     }, [handleResize]);
 
-    const onSendComplaints = useCallback(async () => {
+    const onSendComplaints = useCallback(async (type) => {
         if (userInput.trim() === "") return;
         setLoading(true);
         setIsEnd(false);
@@ -29,7 +29,7 @@ export function AppViewModel() {
 
         try {
             const webAppQueryId = tg.initDataUnsafe.query_id;
-            const response = await sendComplaints(webAppQueryId, userInput);
+            const response = await sendComplaints(webAppQueryId, userInput, type);
             setLoading(false);
             setIsEnd(true);
             if (response.ok) tg.close();
